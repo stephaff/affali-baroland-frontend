@@ -1,33 +1,17 @@
 const initialState = {
-    questions : [
-        {
-            title : "Comment faire une recherche dans mongoDB ?",
-            contenu : "bla bla bla bla bla bla bla bla ",
-            category : "React"
-        },
-        {
-            title : "Comment faire une recherche dans mongoDB ?",
-            contenu : "bla bla bla bla bla bla bla bla ",
-            category : "PHP"
-        },
-        {
-            title : "Comment faire une recherche dans mongoDB ?",
-            contenu : "bla bla bla bla bla bla bla bla ",
-            category : "MongoDB"
-        },
-        {
-            title : "Comment faire une recherche dans mongoDB ?",
-            contenu : "bla bla bla bla bla bla bla bla ",
-            category : "HTML"
-        },
-        {
-            title : "Comment faire une recherche dans mongoDB ?",
-            contenu : "bla bla bla bla bla bla bla bla ",
-            category : "Node JS"
-        }
-    ]
+    questions : []
 }
 
 export function questionReducer(state = initialState, action){
-    return state
+    switch(action.type){
+        case 'GET_QUESTION':{
+            return {
+                ...state, 
+                questions : action.payload
+            }
+        }
+        default:{
+            return state
+        }
+    }
 }

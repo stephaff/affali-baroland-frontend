@@ -1,19 +1,20 @@
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCN57hzfHWLGc7W-n8NdMNTCMHjNnT0RTs",
-    authDomain: "baroland-726be.firebaseapp.com",
-    projectId: "baroland-726be",
-    storageBucket: "baroland-726be.appspot.com",
-    messagingSenderId: "651178113484",
-    appId: "1:651178113484:web:f66bdd9bcc87c3a3e34569",
-    measurementId: "G-ZBY03QLHM8"
-  };
+  apiKey: "AIzaSyCqjVHFUZUr0Sfay2TERuwCJaHVakQwIfk",
+  authDomain: "mon-premier-projet-77ff4.firebaseapp.com",
+  projectId: "mon-premier-projet-77ff4",
+  storageBucket: "mon-premier-projet-77ff4.appspot.com",
+  messagingSenderId: "15226594970",
+  appId: "1:15226594970:web:7bdd08d95da2c597f5a123",
+  measurementId: "G-SPN8Y9MTEJ"
+};
 
-  firebase.initializeApp(firebaseConfig);
-  firebase.firestore().settings({ timestampsInSnapShots : true });
+const app = initializeApp(firebaseConfig);
 
-  export default firebase;
+const db = getFirestore(app);
+
+export default db;
+// export default auth;
   

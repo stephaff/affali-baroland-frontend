@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 const Question = ({ question }) => {
 
@@ -9,7 +10,7 @@ const Question = ({ question }) => {
                 <Link to="" className="card-title question black-text">
                     { question.title }
                 </Link>
-                <p>12/10/2022</p>
+                <p className='grey-text'>{ moment(question.createdAt.toDate()).calendar() }</p>
                 <p>{ question.contenu }</p>
                 <div className="category">
                     <p className='blue-text'>2 réponses</p>

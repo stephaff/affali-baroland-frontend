@@ -1,13 +1,32 @@
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom'; 
+import { authentification } from '../redux/actions/actions';
 
 const Connexion = () => {
 
+    const auth = getAuth()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const seConnecter = () => {
-        console.log(email+' '+password)
+    const dispatch = useDispatch()
+    const authInfo = useSelector(state => state.authReducer.user)
+    // console.log(authInfo.uid)
+
+    const seConnecter = async() => {
+        signInWithEmailAndPassword(auth, email, password)
+            .then((cred) =>
+                {
+                    localStorage.setItem('user', JSON.stringify(cred.user))
+                    dispatch(authentification(cred.user))
+                    setEmail('')
+                    setPassword('')
+                }
+            )
+            .catch(e =>
+                console.log(e.message)    
+            )
     }
 
     return (
@@ -24,7 +43,7 @@ const Connexion = () => {
                         <input type="email" id='email' className="browser-default" onChange={ e => setEmail(e.target.value)} />
                         <label htmlFor="password">Mot de passe</label>
                         <input type="password" id='password' className="browser-default" onChange={ e => setPassword(e.target.value)} />
-                        <Link href="" className="btn" onClick={ seConnecter }>Connexion</Link>
+                        <Link to='/' className="btn" onClick={ seConnecter }>Connexion</Link>
                         <p>
                             Si vous n'avez pas de compte, vous pouvez vous <Link to='/inscription'>inscrire</Link>
                         </p>
