@@ -15,13 +15,11 @@ const Inscription = () => {
     const [passwordConfirm, setPasswordConfirm] = useState('');
 
     const dispatch = useDispatch()
-    const user = useSelector(state => state.authReducer.user)
-    console.log(user)
-    
 
     const inscrire = () => {
-        
-        createUserWithEmailAndPassword(auth, email, password)
+        if(nom!=='' && email!=='' && password!=='' && password===passwordConfirm)
+        {
+            createUserWithEmailAndPassword(auth, email, password)
             .then((cred) => 
                   
                 { 
@@ -47,6 +45,7 @@ const Inscription = () => {
             .catch(e => 
                 console.log(e.message)    
             )
+        }
     }
 
     return (
@@ -60,13 +59,13 @@ const Inscription = () => {
                     <div className="connexion-box">
                         <h4>Créer mon compte</h4>
                         <label htmlFor="nom" className='browser-default'>Nom</label>
-                        <input type="text" id='nom' className="browser-default" onChange={ e => setNom(e.target.value)} required/>
+                        <input type="text" id='nom' className="browser-default" onChange={ e => setNom(e.target.value)} />
                         <label htmlFor="email" className='browser-default'>Email</label>
-                        <input type="email" id='email' className="browser-default" onChange={ e => setEmail(e.target.value)} required/>
+                        <input type="email" id='email' className="browser-default" onChange={ e => setEmail(e.target.value)} />
                         <label htmlFor="password">Mot de passe</label>
-                        <input type="password" id='password' className="browser-default" onChange={ e => setPassword(e.target.value)} required/>
+                        <input type="password" id='password' className="browser-default" onChange={ e => setPassword(e.target.value)} />
                         <label htmlFor="passwordConfirm">Mot de passe (confirmation)</label>
-                        <input type="password" id='passwordConfirm' className="browser-default" onChange={ e => setPasswordConfirm(e.target.value)} required/>
+                        <input type="password" id='passwordConfirm' className="browser-default" onChange={ e => setPasswordConfirm(e.target.value)} />
                         <Link to="/" className="btn" onClick={ inscrire }>Inscription</Link>
                         <p>
                             Si vous avez déjà un compte, vous pouvez vous <Link to='/connexion'>connecter</Link>

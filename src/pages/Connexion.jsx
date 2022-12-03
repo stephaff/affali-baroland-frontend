@@ -1,6 +1,6 @@
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom'; 
 import { authentification } from '../redux/actions/actions';
 
@@ -11,8 +11,6 @@ const Connexion = () => {
     const [password, setPassword] = useState('');
 
     const dispatch = useDispatch()
-    const authInfo = useSelector(state => state.authReducer.user)
-    // console.log(authInfo.uid)
 
     const seConnecter = async() => {
         signInWithEmailAndPassword(auth, email, password)

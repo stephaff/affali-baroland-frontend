@@ -10,7 +10,7 @@ const Question = ({ question }) => {
                 <Link to="" className="card-title question black-text">
                     { question.title }
                 </Link>
-                <p className='grey-text'>{ moment(question.createdAt.toDate()).calendar() }</p>
+                <p className='grey-text'>{ moment(question.createdAt.toDate()).format('L') }</p>
                 <p>{ question.contenu }</p>
                 <div className="category">
                     <p className='blue-text'>2 réponses</p>

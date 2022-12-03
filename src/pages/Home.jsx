@@ -13,9 +13,7 @@ const Home = () => {
     const dispatch = useDispatch();
 
     const questions = useSelector(state => state.questionReducer.questions)
-    console.log(questions)
     
-
     useEffect(() => {
     
         let tabQuestion = [];

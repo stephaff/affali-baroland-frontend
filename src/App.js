@@ -12,7 +12,6 @@ function App() {
 
   const dispatch = useDispatch()
   const user = useSelector(state => state.authReducer.user)
-  console.log(user)
    
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'))
