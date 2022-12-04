@@ -10,6 +10,12 @@ export function questionReducer(state = initialState, action){
                 questions : action.payload
             }
         }
+        case 'ADD_QUESTION':{
+            return {
+                ...state, 
+                questions : action.payload
+            }
+        }
         default:{
             return state
         }

@@ -6,7 +6,14 @@ export function getQuestion(data){
     }
 }
 
-export function authentification(user){
+export function addQuestion(data){
+    return {
+        type : 'ADD_QUESTION',
+        payload : data
+    }
+}
+
+export function login(user){
     return {
         type : 'LOGIN',
         payload : user
@@ -15,7 +22,6 @@ export function authentification(user){
 
 export function logout(user){
     return {
-        type : 'LOGOUT',
-        payload : null
+        type : 'LOGOUT'
     }
 }

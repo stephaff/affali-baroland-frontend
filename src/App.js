@@ -5,7 +5,7 @@ import AskQuestion from "./pages/AskQuestion";
 import Connexion from "./pages/Connexion";
 import Home from "./pages/Home";
 import Inscription from "./pages/Inscription";
-import { authentification } from "./redux/actions/actions";
+import { login } from "./redux/actions/actions";
 
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
    
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'))
-    dispatch(authentification(user))
+    dispatch(login(user))
  },[]);
 
   return (

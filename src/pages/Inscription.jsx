@@ -1,14 +1,10 @@
-import { getAuth ,createUserWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { addDoc, collection } from "firebase/firestore";
-import db from '../config/firebaseConfig';
-import { useDispatch, useSelector } from 'react-redux';
-import { authentification } from '../redux/actions/actions';
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/actions/actions';
 
 const Inscription = () => {
 
-    const auth = getAuth()
     const [nom, setNom] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -16,36 +12,25 @@ const Inscription = () => {
 
     const dispatch = useDispatch()
 
-    const inscrire = () => {
-        if(nom!=='' && email!=='' && password!=='' && password===passwordConfirm)
-        {
-            createUserWithEmailAndPassword(auth, email, password)
-            .then((cred) => 
-                  
-                { 
-                    const user = {
-                        nom: nom,
-                        email: email,
-                        password: password,
-                        id: cred.user.uid
-                  }
-                    addDoc(collection(db, "users"), user )
-                .then(() => 
-                    {
-                        localStorage.setItem('user', JSON.stringify(user))
-                        dispatch(authentification(user))
-                        setNom('')
-                        setEmail('')
-                        setPassword('')
-                        setPassword('')
-                    }
-                )    
-                .catch (e => console.error(e))  } 
-            )
-            .catch(e => 
-                console.log(e.message)    
-            )
+    const inscrire = async() => {
+
+        const response = await fetch('/api/user/connexion', {
+            method : "post",
+            headers : {"Content-Type": "application/json"},
+            body : JSON.stringify({ email, password })
+        })
+        const json = await response.json()
+        
+        if(!response.ok){
+            console.log(json.error)
         }
+
+        if(response.ok){
+            console.log(json)
+            localStorage.setItem('user', JSON.stringify(json))
+            dispatch(login(json)) 
+        }
+        
     }
 
     return (

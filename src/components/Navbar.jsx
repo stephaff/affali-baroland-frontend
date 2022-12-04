@@ -1,26 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getAuth ,signOut } from 'firebase/auth'
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/actions/actions';
 
 const Navbar = () => {
 
-    const auth = getAuth()
     const dispatch = useDispatch()
     const user = useSelector(state => state.authReducer.user)
 
     const seDeconnecter = () => {
-        signOut(auth)
-            .then(() =>
-                {
-                    localStorage.removeItem('user')
-                    dispatch(logout())
-                }
-            )
-            .catch(e => 
-                console.log(e.message)    
-            )
+        
+        localStorage.removeItem('user')
+        dispatch(logout())
+         
     }
     return (
         <nav>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import db from '../config/firebaseConfig';
+import { addQuestion } from '../redux/actions/actions';
+import { useDispatch } from 'react-redux';
 
 const AskQuestion = ({ nom }) => {
 
@@ -10,22 +10,24 @@ const AskQuestion = ({ nom }) => {
     const [category, setCategory] = useState('');
     // const [authorName, setAuthorName] = useState('');
 
+    const dispatch = useDispatch()
+
     const createQuestion = async() => {
-        try {
-            const question = await addDoc(collection(db, "questions"), {
-              title: title,
-              contenu: contenu,
-              category: category,
-              authorName: 'Steph',
-              createdAt: new Date(),
-              id: serverTimestamp()
-            })
-            setTitle('')
-            setContenu('')
-            setCategory('')
-          } catch (e) {
-            console.error(e);
-          }
+        
+        const response = await fetch('/api/questions', {
+            method : "post",
+            headers : {"Content-Type": "application/json"},
+            body : JSON.stringify({ title, contenu, category })
+        })
+        const json = await response.json()
+        
+        if(!response.ok){
+            console.log(json.error)
+        }
+
+        if(response.ok){
+            dispatch(addQuestion(json)) 
+        }
     }
 
     return (

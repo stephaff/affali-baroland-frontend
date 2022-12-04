@@ -1,30 +1,34 @@
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom'; 
-import { authentification } from '../redux/actions/actions';
+import { login } from '../redux/actions/actions';
 
 const Connexion = () => {
 
-    const auth = getAuth()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const dispatch = useDispatch()
 
     const seConnecter = async() => {
-        signInWithEmailAndPassword(auth, email, password)
-            .then((cred) =>
-                {
-                    localStorage.setItem('user', JSON.stringify(cred.user))
-                    dispatch(authentification(cred.user))
-                    setEmail('')
-                    setPassword('')
-                }
-            )
-            .catch(e =>
-                console.log(e.message)    
-            )
+        
+        const response = await fetch('/api/user/connexion', {
+            method : "post",
+            headers : {"Content-Type": "application/json"},
+            body : JSON.stringify({ email, password })
+        })
+        const json = await response.json()
+        
+        if(!response.ok){
+            console.log(json.error)
+        }
+
+        if(response.ok){
+            console.log(json)
+            localStorage.setItem('user', JSON.stringify(json))
+            dispatch(login(json)) 
+        }
+
     }
 
     return (

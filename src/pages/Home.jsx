@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Banner from '../components/Banner';
 import Navbar from '../components/Navbar';
 import Question from '../components/Question';
-import { collection, getDocs, orderBy } from "firebase/firestore"; 
-import db from '../config/firebaseConfig';
 import { getQuestion } from '../redux/actions/actions';
 
 const Home = () => {
@@ -15,17 +13,15 @@ const Home = () => {
     const questions = useSelector(state => state.questionReducer.questions)
     
     useEffect(() => {
-    
-        let tabQuestion = [];
-        const getAllQuestions = async () => {
-            const querySnapshot = await getDocs(collection(db, "questions"), orderBy("createdAt"));
-            querySnapshot.forEach((doc) => {
-                tabQuestion.push({ ...doc.data(), id: doc.id })
-              });
-              dispatch(getQuestion(tabQuestion))
-        }
         
-        getAllQuestions()
+        fetch('/api/questions')
+            .then(res =>
+                res.json()    
+            )
+            .then(json =>
+                {console.log(json)
+                dispatch(getQuestion(json))}    
+            )
 
     }, []);
 
@@ -41,7 +37,7 @@ const Home = () => {
                         <div className="col s12 m4">
                             <div className="collection">
                                 {questions && questions.map((question) =>
-                                    <Link to="#!" className="collection-item blue-text text-darken-3" key={ question.id }>
+                                    <Link to="#!" className="collection-item blue-text text-darken-3" key={ question._id }>
                                         <span className="badge blue white-text">1</span>
                                         <span>{ question.category }</span>
                                     </Link>
@@ -58,7 +54,7 @@ const Home = () => {
                                 </Link>
                             </div>
                             {questions && questions.map((question) =>
-                                <Question question={ question } key={ question.id }/>
+                                <Question question={ question } key={ question._id }/>
                                 )
                             }
                         </div>
