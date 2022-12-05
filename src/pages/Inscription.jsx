@@ -14,7 +14,7 @@ const Inscription = () => {
 
     const inscrire = async() => {
 
-        const response = await fetch('/api/user/connexion', {
+        const response = await fetch('/api/user/inscription', {
             method : "post",
             headers : {"Content-Type": "application/json"},
             body : JSON.stringify({ email, password })
@@ -51,7 +51,7 @@ const Inscription = () => {
                         <input type="password" id='password' className="browser-default" onChange={ e => setPassword(e.target.value)} />
                         <label htmlFor="passwordConfirm">Mot de passe (confirmation)</label>
                         <input type="password" id='passwordConfirm' className="browser-default" onChange={ e => setPasswordConfirm(e.target.value)} />
-                        <Link to="/" className="btn" onClick={ inscrire }>Inscription</Link>
+                        <Link to="" className="btn" onClick={ inscrire }>Inscription</Link>
                         <p>
                             Si vous avez déjà un compte, vous pouvez vous <Link to='/connexion'>connecter</Link>
                         </p>
